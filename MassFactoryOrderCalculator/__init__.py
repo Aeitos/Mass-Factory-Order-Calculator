@@ -1,3 +1,5 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
 from . import gui
 from PyQt5 import QtWidgets
 import sys

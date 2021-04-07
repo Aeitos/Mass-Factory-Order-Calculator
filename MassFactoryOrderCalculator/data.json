@@ -1,4 +1,4 @@
-DATA = {
+{
   "Small Arms": {
     ".44": {
       "Unit par crate": 40,

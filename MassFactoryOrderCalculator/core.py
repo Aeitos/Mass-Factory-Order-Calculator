@@ -1,16 +1,28 @@
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+Author
+"""
+
 import os
 import datetime
-from . import data as JSONDATA
+import json
 
-PATH = os.path.abspath(__file__)
-DIR_PATH = os.path.dirname(PATH)
-JSON_PATH = "{}/data.py".format(DIR_PATH)
+_SCRIPT_PATH = os.path.abspath(__file__)
+_DIR_PATH = os.path.dirname(_SCRIPT_PATH)
+_JSON_PATH = "{}/data.json".format(_DIR_PATH)
 
 INFO_LIST = ["Unit par crate", "B. Mat", "E. Mat", "H.E. MAt", "R. Mat", "Time (seconds)"]
 
 
 def get_json_data():
-    return JSONDATA.DATA
+    """
+    Extract json datas from data.json file
+    :return:
+    """
+    with open(_JSON_PATH) as json_access:
+        json_data = json.load(json_access)
+    return json_data
 
 
 JSON_DATA = get_json_data()

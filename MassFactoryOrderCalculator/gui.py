@@ -1,10 +1,19 @@
-from PyQt5 import QtWidgets, QtCore, QtGui
-import os
+#!/usr/bin/python
+# -*- coding: utf-8 -*-
+"""
+:Module author: Cédric Malet <cedric.malet.art@gmail.com>
+
+GUI module using PyQT5 to create interface for the Mass Factory Order Calculator.
+"""
+from PyQt5 import QtWidgets
 from . import core
 
 
-
 class MassFactoryUI(QtWidgets.QWidget):
+    """
+    Instance for the UI.
+    """
+
     def __init__(self):
         super().__init__()
 
@@ -13,54 +22,84 @@ class MassFactoryUI(QtWidgets.QWidget):
         self.display_info()
 
     def build_ui(self):
-        # Main Layout
+        """
+        Build the UI using Qt Layouts and Widgets.
+        """
+        # Main Layouts
         self.main_layout = QtWidgets.QHBoxLayout(self)
-        self.search_layout = QtWidgets.QVBoxLayout()
 
-        # Add search Layout to Main Layout
-        self.main_layout.addLayout(self.search_layout)
+        # === List Widget ===
+        # Layout
+        self.list_layout = QtWidgets.QVBoxLayout()
+        self.main_layout.addLayout(self.list_layout)
 
-        # Widgets
-        # Search Bar
+        # = Search Bar =
+        # Create Widget
         self.search_bar_line_edit = QtWidgets.QLineEdit(self)
+
+        # Setup widget
         self.search_bar_line_edit.setPlaceholderText('Search Bar')
         self.search_bar_line_edit.setStyleSheet("color: white;")
 
-        # List Widget
+        # Add widget to layout
+        self.list_layout.addWidget(self.search_bar_line_edit)
+
+        # = List Widget =
+        # Create Widget
         self.craft_list_widget = QtWidgets.QListWidget(self)
         self.craft_list_widget.setStyleSheet("color: white;"
                                              "background-color: #404040;")
-
+        # Setup widget
+        # Create item_list_widgets in the list_widget.
         self.build_craft_list()
 
-        self.search_layout.addWidget(self.search_bar_line_edit)
-        self.search_layout.addWidget(self.craft_list_widget)
+        # Add widget to layout
+        self.list_layout.addWidget(self.craft_list_widget)
 
-        # Display infos
+        # === Info Widget ===
+        # Layout
         self.info_layout = QtWidgets.QVBoxLayout()
         self.main_layout.addLayout(self.info_layout)
 
+        # = Info Text Browser =
+        # Create Widget
         self.info_text_browser = QtWidgets.QTextBrowser(self)
+
+        # Setup widget
         self.info_text_browser.setStyleSheet("color: white;")
+
+        # Add widget to layout
         self.info_layout.addWidget(self.info_text_browser)
 
+        # = Crate Number Widget =
+        # Layout
         self.crate_number_layout = QtWidgets.QHBoxLayout()
         self.info_layout.addLayout(self.crate_number_layout)
 
+        # = Spinbox Widget =
+        # Create Widget
         self.crate_number_spinbox = QtWidgets.QSpinBox(self)
+
+        # Setup widget
         self.crate_number_spinbox.setStyleSheet("color: white;")
         self.crate_number_spinbox.setRange(1, 9)
         self.crate_number_spinbox.setValue(9)
+
+        # Add widget to layout
         self.crate_number_layout.addWidget(self.crate_number_spinbox)
 
+        # = Buttons Widget =
+        # Create Widget
         self.minus_button = QtWidgets.QPushButton(self, text='-')
         self.plus_button = QtWidgets.QPushButton(self, text='+')
+
+        # Setup widget
         self.minus_button.setStyleSheet("color: white;")
         self.plus_button.setStyleSheet("color: white;")
+
+        # Add widget to layout
         self.crate_number_layout.addWidget(self.plus_button)
         self.crate_number_layout.addWidget(self.minus_button)
-
-
 
     def make_connection(self):
         self.search_bar_line_edit.textChanged.connect(self.refresh_list_widget)
