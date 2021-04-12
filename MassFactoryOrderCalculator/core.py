@@ -14,6 +14,8 @@ _JSON_PATH = "{}/data.json".format(_DIR_PATH)
 
 INFO_LIST = ["Unit par crate", "B. Mat", "E. Mat", "H.E. MAt", "R. Mat", "Time (seconds)"]
 
+_RESSOURCES_PATH = "{}/ressources".format(_DIR_PATH)
+
 
 def get_json_data():
     """
@@ -35,10 +37,26 @@ def get_info(craft_input):
                 return JSON_DATA[category][craft]
 
 
+def convert_resources_info(craft_input, crate_num):
+    info = get_info(craft_input)
+    converted_info_dict = {}
+    for inf in info:
+        if inf in INFO_LIST[1:5]:
+            reduction = 90
+            converted_info_dict[inf] = 0
+            for i in range(crate_num):
+                converted_value = converted_info_dict[inf] + int(info[inf] * reduction / 100.0)
+                if converted_value != 0:
+                    converted_info_dict[inf] = converted_value
+                if not reduction == 50:
+                    reduction -= 10
+    return converted_info_dict
+
+
 def convert_info(craft_input, crate_num):
     info = get_info(craft_input)
     converted_info_dict = {}
-    for idx, inf in enumerate(info):
+    for inf in info:
         if inf in INFO_LIST[1:5]:
             reduction = 90
             converted_info_dict[inf] = 0
@@ -46,26 +64,23 @@ def convert_info(craft_input, crate_num):
                 converted_info_dict[inf] = converted_info_dict[inf] + int(info[inf] * reduction / 100.0)
                 if not reduction == 50:
                     reduction -= 10
-        elif not info[inf] == '?':
+        elif not isinstance(info[inf], int):
             converted_info_dict[inf] = info[inf] * crate_num
-    if not info[INFO_LIST[-1]] == '?':
-        now = datetime.datetime.now()
-        converted_date_time = datetime.timedelta(seconds=converted_info_dict[INFO_LIST[-1]])
-        delivery_time = now + converted_date_time
-        converted_info_dict['Delivery date'] = delivery_time.strftime("%d/%m/%Y %H:%M:%S")
     return converted_info_dict
 
 
-def create_info_text(craft_input, crate_num):
-    info = convert_info(craft_input, crate_num)
-    text = '{}\nFor {} crates.\n==========\n'.format(craft_input, crate_num)
-    for inf in info:
-        if inf == INFO_LIST[0]:
-            text += 'Total unite crafted: {}\n'.format(info[inf])
-        else:
-            if not info[inf] == 0:
-                text += '{}: {}\n'.format(inf, info[inf])
-    return text
+def convert_time_info(craft_input, crate_num):
+    info = get_info(craft_input)
+    crate_info = info[INFO_LIST[-1]]
+    converted_info = crate_info * crate_num
+    return converted_info
+
+
+def get_base_info(craft_input, crate_num):
+    info = get_info(craft_input)
+    crate_info = info[INFO_LIST[0]]
+    converted_info = crate_info * crate_num
+    return converted_info
 
 
 def get_craft_category(craft_item):
@@ -80,3 +95,24 @@ def get_categories():
 
 def get_crafts(category):
     return [craft for craft in JSON_DATA[category]]
+
+
+def get_category_icon(category):
+    return "{}/Icons_category/{}.png".format(_RESSOURCES_PATH, category)
+
+
+def get_craft_icon(craft):
+    category = get_craft_category(craft)
+    return "{}/{}/{}.png".format(_RESSOURCES_PATH, category, craft)
+
+
+def get_resource_icon(resource):
+    return "{}/Ressources/{}".format(_RESSOURCES_PATH, resource)
+
+
+def get_crate_icon():
+    return "{}/Ressources/Crate".format(_RESSOURCES_PATH)
+
+
+def get_time_icon():
+    return "{}/Ressources/Time".format(_RESSOURCES_PATH)
