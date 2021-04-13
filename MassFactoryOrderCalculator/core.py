@@ -1,20 +1,23 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
 Author
 """
 
+import sys
 import os
-import datetime
 import json
 
-_SCRIPT_PATH = os.path.abspath(__file__)
-_DIR_PATH = os.path.dirname(_SCRIPT_PATH)
-_JSON_PATH = "{}/data.json".format(_DIR_PATH)
+if getattr(sys, 'frozen', False):
+    DIR_PATH = sys._MEIPASS
+else:
+    DIR_PATH = os.path.dirname(os.path.abspath(__file__))
+
+_JSON_PATH = "{}/ressources/data.json".format(DIR_PATH)
 
 INFO_LIST = ["Unit par crate", "B. Mat", "E. Mat", "H.E. MAt", "R. Mat", "Time (seconds)"]
 
-_RESSOURCES_PATH = "{}/ressources".format(_DIR_PATH)
+_RESSOURCES_PATH = "{}/ressources".format(DIR_PATH)
 
 
 def get_json_data():

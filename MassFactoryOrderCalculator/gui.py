@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # -*- coding: utf-8 -*-
 """
 :Module author: Cédric Malet <cedric.malet.art@gmail.com>
@@ -214,6 +214,10 @@ class MassFactoryUI(QtWidgets.QWidget):
         # Create list item widget.
         self.rebuild_craft_list(filter_craft, category, list_widget)
 
+        # Select the first item
+        list_widget.setCurrentItem(list_widget.item(0))
+
+
     def rebuild_craft_list(self, filter_craft, category, list_widget):
         """
         Add each craft to de list widget depending if filter is in the craft
@@ -287,6 +291,8 @@ class MassFactoryUI(QtWidgets.QWidget):
             crate_num_text_label = QtWidgets.QLabel()
             crate_num_text_label.setText("Total craft item: {}".format(crate_num_info))
             crate_num_text_label.setStyleSheet("color: white;")
+            font.setPointSize(12)
+            crate_num_text_label.setFont(font)
 
             crate_num_layout.addWidget(crate_name_icon_label)
             crate_num_layout.addWidget(crate_num_text_label)
@@ -314,6 +320,9 @@ class MassFactoryUI(QtWidgets.QWidget):
                     resource_label_widget = QtWidgets.QLabel()
                     resource_label_widget.setText(resource_text)
                     resource_label_widget.setStyleSheet("color: white;")
+                    font = QtGui.QFont()
+                    font.setPointSize(12)
+                    resource_label_widget.setFont(font)
                     resource_icon_label_widget = QtWidgets.QLabel()
                     resource_icon_label_widget.setPixmap(resource_pixmap)
 
@@ -344,10 +353,13 @@ class MassFactoryUI(QtWidgets.QWidget):
             time_text_label = QtWidgets.QLabel()
             time_text_label.setText("Time in seconds: {}".format(time_info))
             time_text_label.setStyleSheet("color: white;")
+            font = QtGui.QFont()
+            font.setPointSize(12)
+            time_text_label.setFont(font)
+
 
             time_layout.addWidget(time_icon_label)
             time_layout.addWidget(time_text_label)
-
 
     def add_crate(self):
         num = self.crate_number_spinbox.value()
