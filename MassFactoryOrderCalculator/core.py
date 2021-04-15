@@ -15,7 +15,7 @@ else:
 
 _JSON_PATH = "{}/ressources/data.json".format(DIR_PATH)
 
-INFO_LIST = ["Unit par crate", "B. Mat", "E. Mat", "H.E. MAt", "R. Mat", "Time (seconds)"]
+INFO_LIST = ["Unit par crate", "B. Mat", "E. Mat", "H.E. Mat", "R. Mat", "Time (seconds)"]
 
 _RESSOURCES_PATH = "{}/ressources".format(DIR_PATH)
 
